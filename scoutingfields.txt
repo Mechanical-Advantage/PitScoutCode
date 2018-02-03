@@ -1,27 +1,28 @@
 
 Team
-Match
-Fouls
-TechFouls
-Replay
-Flag
+Match - required set to 1
+Fouls - required?
+TechFouls - required?
+Replay required
+Flag required
+intakeType
+deliveryMethod
 AutoCross
-AutoSwitch
-AutoScale
-AutoXchange
-AllianceColor (0 - R or 1 - b)
-StartPos (0 - l or  1 - c or  2 - r)
-NumDelToScale
+autoDelToSwitch
+autoDelToScale
+autoDelToXchange
+teleDelToSwitch
+teleDelToScale
+teleDelToXchange
+canClimb
+canSupport
+canDriveOverBump
+canDriveOnRamp
+driveTrain
 NumDelToSwitch
+NumDelToScale
 NumDelToXchange
-NumDelToOppSwitch
-Climb
-SupportOthers
-FieldScaleLeft
-FieldScaleRight
-FieldSwitchLeft
-FieldSwitchRight
-AutoCross
+
 
 
 

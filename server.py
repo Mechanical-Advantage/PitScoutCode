@@ -990,7 +990,7 @@ localConf = {
         os.path.abspath(os.getcwd()) + './web/static/img/favicon.ico'
     },
     'global': {
-        'server.socket_port': 8000
+        'server.socket_port': 8001
     }
 }
 
