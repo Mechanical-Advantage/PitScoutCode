@@ -286,7 +286,7 @@ class PiScout:
             file.write(str(self.data) + '\n')
         plt.close()
         requests.post(
-            "http://127.0.0.1:8000/submit",
+            "http://127.0.0.1:8001/submit",
             data={
                 'event': CURRENT_EVENT,
                 'data': str(self.data),
@@ -322,7 +322,7 @@ class PiScout:
                         print("Uploaded an entry from the queue")
                 os.remove('queue.txt')
             requests.post(
-                "http://127.0.0.1:8000/submit",
+                "http://127.0.0.1:8001/submit",
                 data={
                     'event': CURRENT_EVENT,
                     'data': str(self.data),

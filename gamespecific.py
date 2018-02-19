@@ -7,29 +7,34 @@ SCOUT_FIELDS = {
     "Match": 0,
     "Fouls": 0,
     "TechFouls": 0,
-    "AutoCross": 0,
-    "AutoSwitch": 0,
-    "AutoScale": 0,
-    "AutoXchange": 0,
-    "AllianceColor": 0,
-    "StartPos": 0,
+    "intakeType": 0,
+    "deliveryMethod": 0,
+    "driveTrain": 0,
     "NumDelToScale": 0,
-    "NumDelToSwitch":0,
+    "NumDelToSwitch": 0,
     "NumDelToXchange": 0,
-    "NumDelToOppSwitch": 0,
-    "Climb": 0,
-    "SupportOthers": 0,
-    "FieldScaleLeft": 0,
-    "FieldScaleRight": 0,
-    "FieldSwitchLeft": 0,
-    "FieldSwitchRight": 0,
-    "AutoCrossField": 0,
+    "canClimb": 0,
+    "canSupportOthers": 0,
+    "canDriveOverBump": 0,
+    "canDriveOnRamp": 0,
+    "autoDelToSwitchAcross": 0,
+    "autoDelToScaleAcross": 0,
+    "autoCrossLineFromLeft": 0,
+    "autoCrossLineFromCenter": 0,
+    "autoCrossLineFromRight": 0,
+    "autoToSwitchFromLeft": 0,
+    "autoToSwitchFromCenter": 0,
+    "autoToSwitchFromRight": 0,
+    "autoToScaleFromLeft": 0,
+    "autoToScaleFromCenter": 0,
+    "autoToScaleFromRight": 0,
+    "autoToXchangeFromLeft": 0,
+    "autoToXchangeFromCenter": 0,
+    "autoToXchangeFromRight": 0,
     "SpareField1": 0,
     "SpareField2": 0,
     "Replay": 0,
-    "Flag": 0,
-    "troubleWithField": 0,
-    "botPark": 0
+    "Flag": 0
 }
 
 #Defines the fields that are stored in the "averages" and similar tables of the database. These are the fields displayed on the home page of the website.
@@ -38,8 +43,7 @@ AVERAGE_FIELDS = {
     "apr":0,
     "NumDelToScale": 0,
     "NumDelToSwitch": 0,
-    "NumDelToXchange": 0,
-    "NumDelToOppSwitch": 0
+    "NumDelToXchange": 0
 }
 
 #Defines the fields displayed on the charts on the team and compare pages
@@ -47,8 +51,7 @@ CHART_FIELDS = {
     "match": 0,
     "NumDelToScale": 0,
     "NumDelToSwitch": 0,
-    "NumDelToXchange": 0,
-    "NumDelToOppSwitch": 0
+    "NumDelToXchange": 0
 }
 
 
@@ -65,64 +68,41 @@ def processSheet(scout):
         num3 = scout.rangefield('J-7', 0, 9)
         num4 = scout.rangefield('J-8', 0, 9)
         scout.set("Team", 1000 * num1 + 100 * num2 + 10 * num3 + num4)
-
-        match1 = scout.rangefield('AB-5', 0, 1)
-        match2 = scout.rangefield('AB-6', 0, 9)
-        match3 = scout.rangefield('AB-7', 0, 9)
-        scout.set("Match", 100 * match1 + 10 * match2 + match3)
+        scout.set("Match", 1)
 
         scout.set("Fouls", int(0))
         scout.set("TechFouls", int(0))
 
-        scout.set("AutoCross", scout.boolfield('I-11'))
-        scout.set("AutoSwitch", scout.boolfield('I-12'))
-        aswitch = scout.boolfield('I-12')
-        scout.set("AutoScale", scout.boolfield('I-13'))
-        ascale = scout.boolfield('I-13')
-        scout.set("AutoXchange", scout.boolfield('I-14'))
-        scout.set("AllianceColor", scout.rangefield('O-11', 0, 1))
-        scout.set("StartPos", scout.rangefield('O-13', 0, 2))
-        stpos = scout.rangefield('O-13', 0, 2)
-
-        scout.set("NumDelToScale", scout.rangefield('AB-13', 0, 9))
-        scout.set("NumDelToXchange", scout.rangefield('AB-14', 0, 9))
-
-
-        numallsw1 = scout.rangefield('AB-9', 0, 9)
-        numallsw2 = scout.rangefield('AB-10', 0, 9)
+        scout.set("intakeType", scout.rangefield('I-11', 0, 3))
+        scout.set("deliveryMethod", scout.rangefield('I-14', 0, 4))
+        scout.set("driveTrain", scout.rangefield('I-17', 0, 3))
+        scout.set("NumDelToScale", scout.rangefield('AA-7', 0, 9))
+        scout.set("NumDelToXchange", scout.rangefield('AA-8', 0, 9))
+        numallsw1 = scout.rangefield('AA-5', 0, 9)
+        numallsw2 = scout.rangefield('AA-6', 0, 9)
         scout.set("NumDelToSwitch", numallsw1 * 10 + numallsw2)
-
-        numoppsw1 = scout.rangefield('AB-11', 0, 9)
-        numoppsw2 = scout.rangefield('AB-12', 0, 9)
-        scout.set("NumDelToOppSwitch", numoppsw1 * 10 + numoppsw2)
-
-        scout.set("Climb", scout.boolfield('AC-17'))
-        scout.set("botPark", scout.boolfield('AC-18'))
-        scout.set("SupportOthers", scout.boolfield('AJ-17'))
-        scout.set("troubleWithField", scout.boolfield('AJ-18'))
-        scout.set("FieldScaleLeft", scout.boolfield('I-17'))
-        fscleft = scout.boolfield('I-17')
-        scout.set("FieldScaleRight", scout.boolfield('J-17'))
-        fscright = scout.boolfield('J-17')
-        scout.set("FieldSwitchLeft", scout.boolfield('I-18'))
-        fswleft = scout.boolfield('I-18')
-        scout.set("FieldSwitchRight", scout.boolfield('J-18'))
-        fswright = scout.boolfield('J-18')
-        scout.set("AutoCrossField", 0)
-        across = 0
-        print(stpos, ascale, aswitch, fscleft, fscright, fswleft, fswright)
-        if stpos == 0 and ascale and fscright:
-            across = 1
-        if stpos == 0 and aswitch and fswright:
-            across = 1
-        if stpos == 2 and ascale and fscleft:
-            across = 1
-        if stpos == 2 and aswitch and fswleft:
-            across = 1
-        scout.set("AutoCrossField", across)
+        scout.set("canClimb", scout.boolfield('AJ-13'))
+        scout.set("canSupportOthers", scout.boolfield('AJ-14'))
+        scout.set("canDriveOverBump", scout.boolfield('AJ-15'))
+        scout.set("canDriveOnRamp", scout.boolfield('AJ-16'))
+        scout.set("autoCrossLineFromLeft", scout.boolfield('Y-13'))
+        scout.set("autoCrossLineFromCenter", scout.boolfield('Z-13'))
+        scout.set("autoCrossLineFromRight", scout.boolfield('AA-13'))
+        scout.set("autoToSwitchFromLeft", scout.boolfield('Y-14'))
+        scout.set("autoToSwitchFromCenter", scout.boolfield('Z-14'))
+        scout.set("autoToSwitchFromRight", scout.boolfield('AA-14'))
+        scout.set("autoDelToSwitchAcross", scout.boolfield('AB-14'))
+        scout.set("autoDelToScaleAcross", scout.boolfield('AB-15'))
+        scout.set("autoToScaleFromLeft", scout.boolfield('Y-15'))
+        scout.set("autoToScaleFromCenter", scout.boolfield('Z-15'))
+        scout.set("autoToScaleFromRight", scout.boolfield('AA-15'))
+        scout.set("autoToXchangeFromLeft", scout.boolfield('Y-16'))
+        scout.set("autoToXchangeFromCenter", scout.boolfield('Z-16'))
+        scout.set("autoToXchangeFromRight", scout.boolfield('AA-16'))
 
 
-        scout.set("Replay", scout.boolfield('AK-5'))
+
+        scout.set("Replay", 0)
 
 #        sideAttempt = scout.boolfield('F-11') and not scout.boolfield('O-11')
 #        centerAttempt = scout.boolfield('J-11') and not scout.boolfield('O-11')
@@ -139,20 +119,18 @@ def processSheet(scout):
 #Takes an entry from the Scout database table and generates text for display on the team page. This page has 4 columns, currently used for auto, 2 teleop, and other (like fouls and end game)
 def generateTeamText(e):
     text = {'auto': "", 'teleop1': "", 'teleop2': "", 'other': ""}
-    text['auto'] += 'baseline, ' if e['AutoCross'] else ''
-    text['auto'] += 'Switch try, ' if e['AutoSwitch'] else ''
-    text['auto'] += 'Scale try, ' if e['AutoScale'] else ''
-    text['auto'] += 'Exchange try, ' if e['AutoXchange'] else ''
+    text['auto'] += 'baseline, ' if e['autoCrossLine'] else ''
+    text['auto'] += 'Switch try, ' if e['autoDelToSwitch'] else ''
+    text['auto'] += 'Scale try, ' if e['autoDelToScale'] else ''
+    text['auto'] += 'Exchange try, ' if e['autoDelToXchange'] else ''
 
     text['teleop1'] += str(
         e['NumDelToScale']) + 'x to scale, ' if e['NumDelToScale'] else ''
 
     text['teleop2'] += str(
         e['NumDelToSwitch']) + 'to switch, ' if e['NumDelToSwitch'] else ''
-    text['teleop2'] += str(
-        e['NumDelToOppSwitch']) + 'to opp switch, ' if e['NumDelToOppSwitch'] else ''
 
-    text['other'] = 'Climb, ' if e['Climb'] else ' '
+    text['other'] = 'Climb, ' if e['canClimb'] else ' '
 
 
     return text
@@ -165,7 +143,6 @@ def generateChartData(e):
 
     dp['NumDelToScale'] += e['NumDelToScale']
     dp['NumDelToSwitch'] += e['NumDelToSwitch']
-    dp['NumDelToOppSwitch'] += e['NumDelToOppSwitch']
     dp['NumDelToXchange'] += e['NumDelToXchange']
 
     return dp
@@ -244,13 +221,12 @@ def calcTotals(entries):
         sums['NumDelToScale'].append(e['NumDelToScale'])
         sums['NumDelToSwitch'].append(e['NumDelToSwitch'])
         sums['NumDelToXchange'].append(e['NumDelToXchange'])
-        sums['NumDelToOppSwitch'].append(e['NumDelToOppSwitch'])
+
 
         if i < 3:
             lastThree['NumDelToScale'] += e['NumDelToScale']
             lastThree['NumDelToSwitch'] += e['NumDelToSwitch']
             lastThree['NumDelToXchange'] += e['NumDelToXchange']
-            lastThree['NumDelToOppSwitch'] += e['NumDelToOppSwitch']
             lastThreeCount += 1
 
     #If there is data, average out the last 3 or less matches
